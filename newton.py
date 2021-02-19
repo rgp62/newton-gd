@@ -1,7 +1,6 @@
 import numpy as np
 import tensorflow as tf
 import scipy.sparse.linalg
-import gc
 
 def makeLS(p):
     if p[0] == 'dense':
@@ -11,7 +10,6 @@ def makeLS(p):
             Ar = tf.reshape(A,(n,n)) + tf.eye(n,dtype=tf.float64)*p[1]
             xr = tf.linalg.solve(Ar,tf.expand_dims(br,1))
             x  = tf.reshape(xr,b.shape)
-            del n,br,Ar,xr
             return x
 
     elif p[0] == 'cg':
@@ -22,7 +20,6 @@ def makeLS(p):
             sol = scipy.sparse.linalg.cg(Ar,br,tol=p[1],maxiter=p[2])
             xr = sol[0]
             x = tf.reshape(xr,b.shape)
-            del n,br,Ar,sol,xr
             return x
     return LS
 
@@ -72,8 +69,6 @@ class model:
             self.nvars.assign(nvars_old-lamb*dnvars)
             J_new = self.getJ(x,ytrue)
 
-        del J,dJ,d2J,dnvars,lamb,J_new
-
     def newton_conv(self,x,ytrue,tol=1e-6,max_iter=100000):
         iter = 0
         J1 = self.getJ(x,ytrue)
@@ -85,7 +80,7 @@ class model:
             J1 = self.getJ(x,ytrue)
 
             if iter>max_iter:
-              break
+                break
         return iter,(J1-J2).numpy()
     
     
@@ -96,20 +91,10 @@ class model:
             J =  self.getJ(x,ytrue)
         dJ = g.gradient(J,self.gdvars)
         self.opt.apply_gradients(zip(dJ,self.gdvars))
-        del J,dJ
+
     
     def getacc(self,x,ytrue):
         return tf.keras.metrics.Accuracy(dtype=tf.float64)(ytrue,tf.argmax(self.NN(x),1)).numpy()
-    
-    def __del__(self):
-        del self.nvars
-        del self.gdvars
-        del self.NN
-        del self.loss
-        del self.opt
-        del self.alpha
-        del self.rho
-        gc.collect()
 
 
 
