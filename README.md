@@ -1,14 +1,14 @@
 # newton-gd
 
-This code implements the block coordinate descent optimizer in [1]. Section 2 implements the newton and gradient-based optimizer. Section 1 is an example script applying Newton-GD to the MNIST classification benchmark.
+This code implements the block coordinate descent optimizer in [1]. `newton.py` implements the newton and gradient-based optimizer. `mnist.ipynb` is an example script applying Newton-GD to the MNIST classification benchmark.
 
-Python >= 3.5
-numpy
-scipy
-matplotlib
-toolz
-tensorflow >= 2.2
-tensorflow-datasets
+Python >= 3.5  
+numpy  
+scipy  
+matplotlib  
+toolz  
+tensorflow >= 2.2  
+tensorflow-datasets  
 
 SAND No: 
 
