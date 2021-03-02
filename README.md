@@ -10,6 +10,6 @@ toolz
 tensorflow >= 2.2  
 tensorflow-datasets  
 
-SAND No: 
+SAND No: SAND2021-2384 O
 
 [1] R. G. Patel, N. A. Trask, M. A. Gulian, and E. C. Cyr. A block coordinate descent optimizer for classification problems exploiting convexity. arXiv preprint arXiv:2006.10123, 2020.
